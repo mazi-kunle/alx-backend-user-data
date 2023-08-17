@@ -44,8 +44,9 @@ class DB:
     def find_user_by(self, **kwargs: Any) -> User:
         '''Find user by <args>
         '''
-        if not kwargs:
-            raise InvalidRequestError
+        for i in kwargs.keys():
+            if i not in dir(User):
+                raise InvalidRequestError
 
         found = self._session.query(User).filter_by(**kwargs).first()
         if not found:
