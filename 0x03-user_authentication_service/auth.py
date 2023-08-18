@@ -87,6 +87,7 @@ class Auth:
         '''update current user's session to None
         '''
         self._db.update_user(user_id, session_id=None)
+        return None
 
     def get_reset_password_token(self, email: str) -> str:
         '''get reset password token
