@@ -83,7 +83,7 @@ def reset_pass():
 
 
 @app.route('/reset_password', methods=['PUT'])
-def reset_pass():
+def reset():
     '''handle reset password
     '''
     email = request.form['email']

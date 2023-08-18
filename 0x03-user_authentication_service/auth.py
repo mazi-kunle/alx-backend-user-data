@@ -67,7 +67,7 @@ class Auth:
         try:
             user = self._db.find_user_by(email=email)
         except Exception as e:
-            pass
+            return None
         else:
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
@@ -118,3 +118,4 @@ class Auth:
             self._db.update_user(user.id,
                                  hashed_password=hash_pass,
                                  reset_token=None)
+            return None
