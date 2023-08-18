@@ -1,4 +1,4 @@
-#!/usr/bin/env/python3
+#!/usr/bin/env python3
 '''This is a module'''
 
 import bcrypt
@@ -11,3 +11,13 @@ def _hash_password(password: str) -> bytes:
     salt = bcrypt.gensalt()
     hash = bcrypt.hashpw(bytes, salt)
     return hash
+
+# from db import DB
+
+
+# class Auth:
+#     """Auth class to interact with the authentication database.
+#     """
+
+#     def __init__(self):
+#         self._db = DB()
