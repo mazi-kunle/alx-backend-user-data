@@ -49,8 +49,8 @@ class Auth:
                 return True
             return False
 
-    def _generate_uuid(self):
+    def _generate_uuid(self) -> str:
         '''generate uuid'''
         import uuid
 
-        return uuid.uuid4()
+        return str(uuid.uuid4())
