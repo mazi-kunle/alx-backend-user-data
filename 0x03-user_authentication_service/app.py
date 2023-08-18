@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''This is a module'''
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 app = Flask(__name__)
@@ -28,6 +28,22 @@ def users():
         return jsonify({'message': "email already registered"})
     else:
         return jsonify({'email': email, "message": 'user created'})
+
+
+@app.route('/sessions', methods=['POST'])
+def sessions():
+    '''Handle /sessions route
+    '''
+    email = request.form['email']
+    password = request.form['password']
+    # login validation
+    if AUTH.valid_login(email, password):
+        new_session = AUTH.create_session(email)
+        resp = jsonify({'email': email, 'message': 'logged in'})
+        resp.set_cookie('session_id', new_session)
+        return resp
+    else:
+        abort(401)
 
 
 if __name__ == '__main__':
