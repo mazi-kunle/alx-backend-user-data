@@ -55,3 +55,19 @@ class Auth:
             if bcrypt.checkpw(password, user.hashed_password):
                 return True
             return False
+
+    def create_session(self, email: str) -> str:
+        '''find user corresponding to email,
+            generate a new UUID and store it
+            in the database as the user's
+            session_id
+
+            Return: session id'''
+        try:
+            user = self._db.find_user_by(email=email)
+        except Exception as e:
+            pass
+        else:
+            session_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
