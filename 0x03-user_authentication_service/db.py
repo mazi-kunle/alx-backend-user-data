@@ -56,7 +56,11 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         '''update User
         '''
-        found = self.find_user_by(user_id=user_id)
+        try:
+            found = self.find_user_by(id=user_id)
+        except Exception as e:
+            raise e
+
         if not kwargs:
             raise ValueError
         found.update(kwargs)
