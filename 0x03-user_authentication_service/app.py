@@ -58,5 +58,45 @@ def delSession():
         abort(403)
 
 
+@app.route('/profile', methods=['GET'])
+def profile():
+    '''get user profile'''
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        return jsonify({'email': user.email})
+    else:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['POST'])
+def reset_pass():
+    '''handle reset password
+    '''
+    email = request.form['email']
+    try:
+        token = AUTH.get_reset_password_token(email)
+    except ValueError:
+        abort(403)
+    else:
+        return jsonify({'email': email, 'reset_token': token})
+
+
+@app.route('/reset_password', methods=['PUT'])
+def reset_pass():
+    '''handle reset password
+    '''
+    email = request.form['email']
+    reset_token = request.form['reset_token']
+    new_password = request.form['new_password']
+
+    try:
+        AUTH.update_password(reset_token, new_password)
+    except ValueError:
+        abort(403)
+    else:
+        return jsonify({'email': email, 'message': 'Password updated'})
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
