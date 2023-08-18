@@ -57,10 +57,11 @@ class DB:
         '''update User
         '''
         found = self.find_user_by(id=user_id)
-        if not kwargs:
-            raise ValueError
 
         for key, value in kwargs.items():
-            found.key = value
+            if not hasattr(found, key):
+                raise ValueError
+            setattr(found, key, value)
+
         self._session.commit()
         return None
