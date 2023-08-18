@@ -48,3 +48,9 @@ class Auth:
             if bcrypt.checkpw(password, user.hashed_password):
                 return True
             return False
+
+    def _generate_uuid(self):
+        '''generate uuid'''
+        import uuid
+
+        return uuid.uuid4()
