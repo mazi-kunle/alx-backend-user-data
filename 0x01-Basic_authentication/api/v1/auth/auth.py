@@ -26,6 +26,14 @@ class Auth:
             return True
 
         valid_path = path + '/' if path[-1] != '/' else path
+        short_path = valid_path.split('/')[-2]
+
+        for path in excluded_paths:
+            path = path.split('/')[-1]
+            if '*' in path:
+                path = path[:-1]
+                if short_path.startswith(path):
+                    return False
 
         if valid_path in excluded_paths:
             return False
